@@ -11,6 +11,7 @@
 .OUTPUT:
        This is the output you should expect.
        PS C:\Windows\system32> C:\Users\Alan\Documents\terraform-updater.ps1
+        Folder 'C:\terraform' already exists.
 	Latest Terraform already installed.
 	Current tf version: 1.7.0
 	Latest tf Version: 1.7.0
@@ -25,6 +26,19 @@ param(
 	# Terraform Arch to be downloaded
 	[string] $tf_arch = "amd64"
 )
+
+# Function to check if a folder exists and create it if not
+function create_folder_if_not_exists($tf_path) {
+    if (-not (Test-Path -Path $tf_path -PathType Container)) {
+        New-Item -Path $tf_path -ItemType Directory
+        Write-Host "Folder '$tf_path' created."
+    } else {
+        Write-Host "Folder '$folder_path' already exists."
+    }
+}
+
+# Check and create the Terraform folder
+create_folder_if_not_exists $tf_path
 
 $tf_release_url = "https://api.github.com/repos/hashicorp/terraform/releases/latest"
 
