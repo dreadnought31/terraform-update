@@ -2,27 +2,19 @@
 .SYNOPSIS
 	Script to auto-update terraform to latest version
 
-.DESCRIPTION
-	Script will scrape "https://api.github.com/repos/hashicorp/terraform/releases/latest" for latest terraform version
-	If local version does not match the remote version, it will download and replace terraform with latest version
-	Script gets the current version by running "terraform version".
-
-.PARAMETER tf_path
-	Specify the path where terraform.exe is located.
-	Ex: $tf_path = "C:\tools"
-
-.PARAMETER tf_arch
-	Specify the System Architecture.
-	Allowed values:
-		amd64 - For 64-bit systems
-		386 - For 32-bit systems
-
-	ex: $tf_arch = "amd64"
-
-.LINK
-	https://releases.hashicorp.com/terraform/$($LATEST_RELEASE)/terraform_$($LATEST_RELEASE)_windows_$($tf_arch).zip
-	https://api.github.com/repos/hashicorp/terraform/releases/latest
-
+.DESCRIPTION: 
+	This script will check for the latest verSion of terraform and download it to a local folder that you specify.
+        "amd64" in the script will download the 64 bit version but if you need the 32bit one put in 386 instead. 
+	It will also add in the environment variable C":\terraform" as well if not there already.
+	 You will need to create the folder to download the script to if not already there and change the path location in the script.
+ 
+.OUTPUT:
+       This is the output you should expect.
+       PS C:\Windows\system32> C:\Users\Alan\Documents\terraform-updater.ps1
+	Latest Terraform already installed.
+	Current tf version: 1.7.0
+	Latest tf Version: 1.7.0
+	The new path (C:terraform) already exists in the Path environment variable.
 #>
 
 # Set parameters
@@ -126,4 +118,19 @@ else {
 	Write-Host
 	Write-Host "Current tf version: $(get_cur_tf_version)"
 	Write-Host "Latest tf Version: $(get_latest_tf_version)"
+}
+# Get the current value of the Path variable
+$currentPath = [System.Environment]::GetEnvironmentVariable("Path", [System.EnvironmentVariableTarget]::Machine)
+
+# Check if the new path already exists in the Path variable
+if ($currentPath -notlike "*$tf_path*") {
+    # Append the new path to the existing value, separated by a semicolon
+    $updatedPath = "$currentPath;$tf_path"
+
+    # Set the updated Path variable
+    [System.Environment]::SetEnvironmentVariable("Path", $updatedPath, [System.EnvironmentVariableTarget]::Machine)
+
+    Write-Host "The new path ($tf_path) has been added to the Path environment variable."
+} else {
+    Write-Host "The new path ($tf_path) already exists in the Path environment variable."
 }
