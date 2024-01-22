@@ -5,7 +5,7 @@
 .DESCRIPTION: 
 	This script will check for the latest verSion of terraform and download it to a local folder that you specify.
         "amd64" in the script will download the 64 bit version but if you need the 32bit one put in 386 instead. 
-	It will also add in the environment variable C":\terraform" as well if not there already.
+	It will also add in the environment variable "C:\terraform" as well if not there already.
 	 You will need to create the folder to download the script to if not already there and change the path location in the script.
  
 .OUTPUT:
