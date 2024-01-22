@@ -6,20 +6,16 @@
 	This script will check for the latest verSion of terraform and download it to a local folder that you specify.
         "amd64" in the script will download the 64 bit version but if you need the 32bit one put in 386 instead. 
 	It will also add in the environment variable "C:\terraform" as well if not there already.
-	 You will need to create the folder to download the script to if not already there and change the path location in the script.
  
 .OUTPUT:
        This is the output you should expect.
 
- Directory: C:\
-
-
+Directory: C:\
 Mode                 LastWriteTime         Length Name                                                                                                                                                                                                                                                                                                      
 ----                 -------------         ------ ----                                                                                                                                                                                                                                                                                                      
 d-----        22/01/2024     12:49                terraform                                                                                                                                                                                                                                                                                                 
 Folder 'C:\terraform' created.
 Terraform could not be located in C:\terraform\
-
 Downloading latest version
 Installing latest terraform
 Remove zip file
@@ -30,10 +26,10 @@ This is the output if you already have the folder and current version installed.
 PS C:\WINDOWS\system32> D:\Downloads\tfupdater.ps1
 Folder '' already exists.
 Latest Terraform already installed.
-
 Current tf version: 1.7.0
 Latest tf Version: 1.7.0
 The new path (C:\terraform\) already exists in the Path environment variable.
+
 #>
 
 # Set parameters
